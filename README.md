@@ -11,3 +11,7 @@ Task 2: The bash script to automate the installation of Apache2 web server i.e
 •	Creates a tar archive of apache2 access log and stores in /tmp folder.
 •	Copies the tar archive to AWS S3 bucket.
 •	Upload the script on Github to dev branch then marge pull request to main branch by tag as Version 1.0.
+
+Task 3: 
+•	Creates a book-keeping inventory in the form of HTML which keep track of archives.
+•	Cron the script itself in order to run every day at specific time with root privileges.
