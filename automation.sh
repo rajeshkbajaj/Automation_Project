@@ -60,4 +60,28 @@ echo "Copy logs to s3 bucket"
 aws s3 \
 cp /tmp/${myname}-httpd-logs-${timestamp}.tar \
 s3://${s3_bucket}/${myname}-httpd-logs-${timestamp}.tar
-    
+
+echo "Checks if inventory.html exists in /var/wwww/html folder"
+
+if [ -e /var/www/html/inventory.html ]
+then
+ echo "Inventory.html file does exists"
+ 
+else
+
+ touch /var/www/html/inventory.html
+ echo "<b>Log Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date Created &nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp; Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Size</b>" >> /var/www/html/inventory.html
+fi
+
+echo "<br>httpd-logs &nbsp;&nbsp;&nbsp;&nbsp; ${timestamp} &nbsp;&nbsp;&nbsp;&nbsp; tar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp; `du -h /tmp/${myname}-httpd-logs-${timestamp}.tar | awk '{print $1}'`"             >> /var/www/html/inventory.html
+
+echo "Checks and Add the script to CRON "
+
+if [ -e /etc/cron.d/automation ]
+then
+        echo "Cron Job file is already available"
+else
+        touch /etc/cron.d/automation
+        echo "0 0 * * * root /root/Automation_Project/automation.sh" > /etc/cron.d/automation
+        echo "Cron Job file has been created"
+fi
